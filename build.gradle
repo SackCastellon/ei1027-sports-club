@@ -9,9 +9,6 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
-plugins {
-    id "io.ratpack.ratpack-groovy" version "1.5.1"
-}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -27,8 +24,6 @@ targetCompatibility = 1.8
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
-
-mainClassName = "es.uji.ei1027.sportsclub.SportsClubApplication"
 
 repositories {
     mavenCentral()
