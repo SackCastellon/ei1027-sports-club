@@ -41,7 +41,7 @@ public class SwimmerController {
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public final @NotNull String processAddSubmit(@NotNull BindingResult bindingResult, @ModelAttribute("swimmer") @NotNull Swimmer swimmer) {
+    public final @NotNull String processAddSubmit(@ModelAttribute("swimmer") @NotNull Swimmer swimmer, @NotNull BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "swimmer/add";
         try {
             dao.addSwimmer(swimmer);
