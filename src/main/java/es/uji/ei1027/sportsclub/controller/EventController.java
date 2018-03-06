@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/event")
-@SuppressWarnings("HardcodedFileSeparator")
+@SuppressWarnings({"HardcodedFileSeparator", "FieldHasSetterButNoGetter"})
 public class EventController {
 
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private IEventDao dao;
 
     @Autowired

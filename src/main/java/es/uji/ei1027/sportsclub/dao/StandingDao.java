@@ -14,29 +14,27 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("DesignForExtension")
 public class StandingDao implements IStandingDao {
 
     private JdbcTemplate template;
 
     @Autowired
-    public final void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
+    public void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
         template = new JdbcTemplate(dataSource);
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull List<Standing> getStandings() {
         return template.query("SELECT * FROM standing;", new StandingMapper());
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull List<Standing> getEventStandings(@NotNull String eventName) {
         return template.query("SELECT * FROM standing WHERE event_name = ?;", new StandingMapper(), eventName);
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull List<Standing> getCountryStandings(@NotNull String country) {
         return template.query("SELECT st.* FROM standing st JOIN swimmer sw ON st.swimmer_name = sw.name WHERE sw.country = ?;", new StandingMapper(), country);
     }
@@ -54,7 +52,7 @@ public class StandingDao implements IStandingDao {
     }
 
     @Override
-    public final @NotNull String toString() {
+    public @NotNull String toString() {
         return String.format("StandingDao{template=%s}", template);
     }
 }

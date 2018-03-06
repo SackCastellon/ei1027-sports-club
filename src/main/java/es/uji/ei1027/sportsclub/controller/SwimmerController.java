@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/swimmer")
-@SuppressWarnings("HardcodedFileSeparator")
+@SuppressWarnings({"HardcodedFileSeparator", "FieldHasSetterButNoGetter"})
 public class SwimmerController {
 
     private final @NotNull Logger log = LoggerFactory.getLogger(getClass());
 
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private ISwimmerDao dao;
 
     @Autowired

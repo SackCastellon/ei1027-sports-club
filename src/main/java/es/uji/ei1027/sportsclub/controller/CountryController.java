@@ -17,13 +17,10 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/country")
-@SuppressWarnings("HardcodedFileSeparator")
+@SuppressWarnings({"HardcodedFileSeparator", "FieldHasSetterButNoGetter"})
 public class CountryController {
 
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private ISwimmerDao swimmerDao;
-
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private IStandingDao standingDao;
 
     @Autowired

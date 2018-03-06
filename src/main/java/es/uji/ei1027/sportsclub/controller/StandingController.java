@@ -15,10 +15,9 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/standing")
-@SuppressWarnings("HardcodedFileSeparator")
+@SuppressWarnings({"HardcodedFileSeparator", "FieldHasSetterButNoGetter"})
 public class StandingController {
 
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private IClassificationService service;
 
     @Autowired

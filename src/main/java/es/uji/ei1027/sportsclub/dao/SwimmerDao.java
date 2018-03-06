@@ -14,43 +14,39 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("DesignForExtension")
 public class SwimmerDao implements ISwimmerDao {
 
     private JdbcTemplate template;
 
     @Autowired
-    public final void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
+    public void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
         template = new JdbcTemplate(dataSource);
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull List<Swimmer> getSwimmers() {
         return template.query("SELECT * FROM swimmer;", new SwimmerMapper());
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull Swimmer getSwimmer(@NotNull String name) {
         return template.queryForObject("SELECT * FROM swimmer WHERE name = ?;", new SwimmerMapper(), name);
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public void addSwimmer(@NotNull Swimmer swimmer) {
         template.update("INSERT INTO swimmer(name, fed_id, country, age, sex) VALUES(?,?,?,?,?)",
                 swimmer.getName(), swimmer.getFedId(), swimmer.getCountry(), swimmer.getAge(), swimmer.getSex());
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public void updateSwimmer(@NotNull Swimmer swimmer) {
         template.update("UPDATE swimmer SET fed_id = ?, country = ?, age = ?, sex = ? WHERE name = ?",
                 swimmer.getFedId(), swimmer.getCountry(), swimmer.getAge(), swimmer.getSex(), swimmer.getName());
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public void deleteSwimmer(@NotNull String name) {
         template.update("DELETE FROM swimmer WHERE name = ?", name);
     }
@@ -69,7 +65,7 @@ public class SwimmerDao implements ISwimmerDao {
     }
 
     @Override
-    public final @NotNull String toString() {
+    public @NotNull String toString() {
         return String.format("SwimmerDao{template=%s}", template);
     }
 }

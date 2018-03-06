@@ -14,21 +14,20 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("DesignForExtension")
 public class EventDao implements IEventDao {
 
     private JdbcTemplate template;
 
     @Autowired
-    public final void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
+    public void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
         template = new JdbcTemplate(dataSource);
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull List<Event> getEvents() {
         return template.query("SELECT * FROM event;", new EventMapper());
     }
-
 
     private static final class EventMapper implements RowMapper<Event> {
 
@@ -42,7 +41,8 @@ public class EventDao implements IEventDao {
     }
 
     @Override
-    public final @NotNull String toString() {
+    public @NotNull String toString() {
         return String.format("EventDao{template=%s}", template);
     }
 }
+
