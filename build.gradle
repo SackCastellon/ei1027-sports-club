@@ -9,6 +9,9 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+plugins {
+    id "io.ratpack.ratpack-groovy" version "1.5.1"
+}
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -17,13 +20,15 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'es.uji.ei1027'
 version = '0.0.1-SNAPSHOT'
-description = 'Project for the Design and Implementation of Information Systems course at Jaume I University'
+description = 'A web app created for the Design and Implementation of Information Systems course at Jaume I University'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
+
+mainClassName = "es.uji.ei1027.sportsclub.SportsClubApplication"
 
 repositories {
     mavenCentral()
