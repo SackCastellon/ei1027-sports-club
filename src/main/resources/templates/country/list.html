@@ -75,7 +75,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!--/*@thymesVar id="countries" type="java.util.List<javafx.util.Pair<java.lang.String, java.lang.Boolean>>"*/-->
+                    <!--/*@thymesVar id="countries" type="java.util.List<java.util.Map.Entry<java.lang.String, java.lang.Boolean>>"*/-->
                     <tr th:each="country : ${countries}">
                         <td class="align-middle" th:text="${country.key}"></td>
                         <td class="align-middle">
