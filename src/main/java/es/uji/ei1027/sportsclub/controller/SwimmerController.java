@@ -63,7 +63,7 @@ public class SwimmerController {
     }
 
     @RequestMapping(path = "/update/{name}", method = RequestMethod.POST)
-    public final @NotNull String processUpdateSubmit(@NotNull BindingResult bindingResult, @ModelAttribute("swimmer") @NotNull Swimmer swimmer, @PathVariable("name") @NotNull String name) {
+    public final @NotNull String processUpdateSubmit(@PathVariable("name") @NotNull String name, @ModelAttribute("swimmer") @NotNull Swimmer swimmer, @NotNull BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "swimmer/update";
         dao.updateSwimmer(swimmer);
         return "redirect:../list";
