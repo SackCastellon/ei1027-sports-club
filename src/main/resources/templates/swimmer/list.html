@@ -131,9 +131,11 @@
             <div class="d-flex align-items-center">
                 <div class="container p-2">
                     <p class="small text-dark text-center">
-                        Made by <a href="https://github.com/SackCastellon">@SackCastellon</a>
-                        using <a href="https://spring.io/">Spring MVC</a>
-                        and <a href="https://getbootstrap.com/">Bootstrap 4</a>
+                        Made by <a href="https://github.com/SackCastellon" target="_blank"
+                                   data-toggle="tooltip" data-placement="top" data-title="GitHub Profile"
+                                   data-template='<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner small"></div></div>'>@SackCastellon</a>
+                        using <a href="https://spring.io/" target="_blank">Spring MVC</a>
+                        and <a href="https://getbootstrap.com/" target="_blank">Bootstrap 4</a>
                     </p>
                 </div>
             </div>
@@ -150,7 +152,24 @@
                 integrity="sha256-ifihHN6L/pNU1ZQikrAb7CnyMBvisKG3SUAab0F3kVU=" crossorigin="anonymous"></script>
 
         <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+
+            $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#swimmers-table").find("tbody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
             var swimmerName = "";
+
+            $('#confirmDeleteModal').on('show.bs.modal', function (e) {
+                $("#confirmDeleteModalBody").html("Are you sure you want to delete the Swimmer <b>" + swimmerName + "</b>?")
+            });
 
             function confirmDeleteSwimmer(name) {
                 console.log("Trying to delete: " + name);
@@ -164,19 +183,6 @@
                     $('#confirmDeleteModal').modal('hide')
                 }
             }
-
-            $('#confirmDeleteModal').on('show.bs.modal', function (e) {
-                $("#confirmDeleteModalBody").html("Are you sure you want to delete the Swimmer <b>" + swimmerName + "</b>?")
-            });
-
-            $(document).ready(function () {
-                $("#search").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#swimmers-table").find("tbody tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
         </script>
     </body>
 </html>
