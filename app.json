@@ -2,5 +2,7 @@
   "name": "Sports Club",
   "description": "A web app created for the Design and Implementation of Information Systems course at Jaume I University",
   "image": "heroku/gradle",
-  "addons": [ "heroku-postgresql" ]
+  "addons": [
+    "heroku-postgresql"
+  ]
 }
