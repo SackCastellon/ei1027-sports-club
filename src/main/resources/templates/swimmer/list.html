@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <!--/*@thymesVar id="swimmers" type="java.util.List<es.uji.ei1027.model.Swimmer>"*/-->
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>-->
         <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-0LGTKb8NPx8fBKaojW3qF+Qo2Yhhs/mBrVHMYjPV8V/o4ZAmZ1cpGI2OeQab16T2" crossorigin="anonymous"/>
 
@@ -15,7 +15,8 @@
     <body>
         <nav class="navbar navbar-dark bg-primary sticky-top navbar-expand-lg">
             <a class="navbar-brand mb-0 h1" href="/">Sports Club</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                    aria-expanded="false"
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -67,7 +68,10 @@
                 </div>
             </div>
             <br/>
-            <table class="table table-hover table-responsive-md" id="swimmers-table">
+            <div class="alert alert-warning" role="alert" th:if="${#lists.isEmpty(swimmers)}">
+                There are not swimmers in the data base
+            </div>
+            <table th:unless="${#lists.isEmpty(swimmers)}" class="table table-hover table-responsive-md" id="swimmers-table">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col" style="width: 15%;">Federate ID</th>
@@ -79,7 +83,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!--/*@thymesVar id="swimmers" type="java.util.List<es.uji.ei1027.sportsclub.model.Swimmer>"*/-->
                     <tr th:each="swimmer : ${swimmers}">
                         <td class="align-middle" th:text="${swimmer.fedId}"></td>
                         <td class="align-middle" th:text="${swimmer.name}"></td>
@@ -92,9 +95,7 @@
                                     <a class="btn btn-info" th:href="@{/swimmer/update/{name}(name=${swimmer.name})}" role="button">Update</a>
                                 </div>
                                 <div class="p-2">
-                                    <button type="button" class="btn btn-danger" th:onclick="'confirmDeleteSwimmer(&quot;'+${swimmer.name}+'&quot;)'"
-                                            data-toggle="modal" data-target="#confirmDeleteModal" data-backdrop="static">Delete
-                                    </button>
+                                    <a class="btn btn-danger" th:href="@{/swimmer/delete/{name}(name=${swimmer.name})}" role="button">Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -103,27 +104,7 @@
             </table>
 
             <div class="d-flex justify-content-center">
-                <a class="btn btn-primary" href="/swimmer/add" role="button">Add new Swimmer</a>
-            </div>
-        </div>
-
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalTitle">Delete confirmation</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="confirmDeleteModalBody">
-                        Are you sure you want to delete the Swimmer?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep</button>
-                        <button type="button" class="btn btn-danger" onclick="deleteSwimmer()">Delete</button>
-                    </div>
-                </div>
+                <a class="btn btn-primary" href="add" role="button">Add new Swimmer</a>
             </div>
         </div>
 
@@ -131,11 +112,9 @@
             <div class="d-flex align-items-center">
                 <div class="container p-2">
                     <p class="small text-dark text-center">
-                        Made by <a href="https://github.com/SackCastellon" target="_blank"
-                                   data-toggle="tooltip" data-placement="top" data-title="GitHub Profile"
-                                   data-template='<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner small"></div></div>'>@SackCastellon</a>
-                        using <a href="https://spring.io/" target="_blank">Spring MVC</a>
-                        and <a href="https://getbootstrap.com/" target="_blank">Bootstrap 4</a>
+                        Made by <a href="https://github.com/SackCastellon">@SackCastellon</a>
+                        using <a href="https://spring.io/">Spring MVC</a>
+                        and <a href="https://getbootstrap.com/">Bootstrap 4</a>
                     </p>
                 </div>
             </div>
@@ -152,10 +131,6 @@
                 integrity="sha256-ifihHN6L/pNU1ZQikrAb7CnyMBvisKG3SUAab0F3kVU=" crossorigin="anonymous"></script>
 
         <script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            });
-
             $(document).ready(function () {
                 $("#search").on("keyup", function () {
                     var value = $(this).val().toLowerCase();
@@ -164,25 +139,6 @@
                     });
                 });
             });
-
-            var swimmerName = "";
-
-            $('#confirmDeleteModal').on('show.bs.modal', function (e) {
-                $("#confirmDeleteModalBody").html("Are you sure you want to delete the Swimmer <b>" + swimmerName + "</b>?")
-            });
-
-            function confirmDeleteSwimmer(name) {
-                console.log("Trying to delete: " + name);
-                swimmerName = name
-            }
-
-            function deleteSwimmer() {
-                if (swimmerName !== "") {
-                    window.location.assign("/swimmer/delete/" + swimmerName)
-                } else {
-                    $('#confirmDeleteModal').modal('hide')
-                }
-            }
         </script>
     </body>
 </html>

@@ -27,7 +27,7 @@ public class StandingController {
 
     @RequestMapping(path = "/byCountry/{event}", method = RequestMethod.GET)
     public final String listClassificationByCountry(@NotNull Model model, @PathVariable("event") @NotNull String event) {
-        Map<String, List<Swimmer>> standings = service.getClassificationByCountry(event);
+        final @NotNull Map<String, List<Swimmer>> standings = service.getClassificationByCountry(event);
         if (standings.isEmpty()) return "redirect:/event/list";
 
         model.addAttribute("eventName", event);
@@ -37,7 +37,7 @@ public class StandingController {
 
     @RequestMapping(path = "/byEvent/{country}", method = RequestMethod.GET)
     public final String listClassificationByEvent(@NotNull Model model, @PathVariable("country") @NotNull String country) {
-        Map<String, List<Swimmer>> standings = service.getClassificationByEvent(country);
+        final @NotNull Map<String, List<Swimmer>> standings = service.getClassificationByEvent(country);
         if (standings.isEmpty()) return "redirect:/event/list";
 
         model.addAttribute("countryName", country);

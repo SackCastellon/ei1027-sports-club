@@ -3,7 +3,6 @@ package es.uji.ei1027.sportsclub.dao;
 import es.uji.ei1027.sportsclub.model.Swimmer;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -20,7 +19,7 @@ public class SwimmerDao implements ISwimmerDao {
     private JdbcTemplate template;
 
     @Autowired
-    public void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
+    public final void setDataSource(@NotNull DataSource dataSource) {
         template = new JdbcTemplate(dataSource);
     }
 
@@ -54,7 +53,7 @@ public class SwimmerDao implements ISwimmerDao {
     private static final class SwimmerMapper implements RowMapper<Swimmer> {
 
         public @NotNull Swimmer mapRow(@NotNull ResultSet rs, int rowNum) throws SQLException {
-            Swimmer swimmer = new Swimmer();
+            final @NotNull  Swimmer swimmer = new Swimmer();
             swimmer.setName(rs.getString("name"));
             swimmer.setFedId(rs.getString("fed_id"));
             swimmer.setCountry(rs.getString("country"));
@@ -65,7 +64,7 @@ public class SwimmerDao implements ISwimmerDao {
     }
 
     @Override
-    public @NotNull String toString() {
+    public final @NotNull String toString() {
         return String.format("SwimmerDao{template=%s}", template);
     }
 }

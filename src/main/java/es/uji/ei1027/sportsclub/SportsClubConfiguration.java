@@ -1,5 +1,8 @@
 package es.uji.ei1027.sportsclub;
 
+import org.jetbrains.annotations.NotNull;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
@@ -8,9 +11,17 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
+import javax.sql.DataSource;
+
 @Configuration
 @SuppressWarnings({"DesignForExtension", "HardcodedFileSeparator", "ClassNamePrefixedWithPackageName"})
 public class SportsClubConfiguration {
+
+    @Bean
+    @ConfigurationProperties("spring.datasource.hikari")
+    public @NotNull DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
 
     @Bean
     @Description("Thymeleaf template resolver serving HTML 5")

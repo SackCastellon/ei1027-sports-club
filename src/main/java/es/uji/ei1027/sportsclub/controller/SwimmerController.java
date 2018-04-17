@@ -42,6 +42,8 @@ public class SwimmerController {
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public final @NotNull String processAddSubmit(@ModelAttribute("swimmer") @NotNull Swimmer swimmer, @NotNull BindingResult bindingResult) {
+        final @NotNull SwimmerValidator validator = new SwimmerValidator();
+        validator.validate(swimmer, bindingResult);
         if (bindingResult.hasErrors()) return "swimmer/add";
         try {
             dao.addSwimmer(swimmer);
@@ -63,7 +65,7 @@ public class SwimmerController {
     }
 
     @RequestMapping(path = "/update/{name}", method = RequestMethod.POST)
-    public final @NotNull String processUpdateSubmit(@PathVariable("name") @NotNull String name, @ModelAttribute("swimmer") @NotNull Swimmer swimmer, @NotNull BindingResult bindingResult) {
+    public final @NotNull String processUpdateSubmit(@NotNull BindingResult bindingResult, @PathVariable("name") @NotNull String name, @ModelAttribute("swimmer") @NotNull Swimmer swimmer) {
         if (bindingResult.hasErrors()) return "swimmer/update";
         dao.updateSwimmer(swimmer);
         return "redirect:../list";

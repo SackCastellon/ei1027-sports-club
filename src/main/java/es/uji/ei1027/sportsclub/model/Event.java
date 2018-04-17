@@ -2,6 +2,7 @@ package es.uji.ei1027.sportsclub.model;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public final class Event {
     }
 
     public @NotNull Set<Standing> getStandings() {
-        return standings;
+        return Collections.unmodifiableSet(standings);
     }
 
     @Override

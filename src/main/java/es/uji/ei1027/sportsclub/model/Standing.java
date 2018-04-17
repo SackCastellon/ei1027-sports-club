@@ -37,11 +37,11 @@ public final class Standing {
     }
 
     public @Nullable Time getFinishTime() {
-        return finishTime;
+        return (finishTime == null) ? null : (Time) finishTime.clone();
     }
 
     public void setFinishTime(@Nullable Time finishTime) {
-        this.finishTime = finishTime;
+        this.finishTime = (finishTime == null) ? null : (Time) finishTime.clone();
     }
 
     @Override

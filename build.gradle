@@ -34,6 +34,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.jetbrains:annotations:15.0'
+    compile 'org.javatuples:javatuples:1.2'
 
     runtime 'org.springframework.boot:spring-boot-devtools'
     runtime 'org.postgresql:postgresql'

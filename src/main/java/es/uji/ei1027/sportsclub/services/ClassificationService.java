@@ -14,11 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@SuppressWarnings({"FieldHasSetterButNoGetter", "DesignForExtension"})
 public class ClassificationService implements IClassificationService {
 
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private SwimmerDao swimmerDao;
-    @SuppressWarnings("FieldHasSetterButNoGetter")
     private StandingDao standingDao;
 
     @Autowired
@@ -32,10 +31,9 @@ public class ClassificationService implements IClassificationService {
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull Map<String, List<Swimmer>> getClassificationByCountry(@NotNull String event) {
-        final List<Standing> eventStandings = standingDao.getEventStandings(event);
-        final Map<String, List<Swimmer>> swimmersByCountry = new HashMap<>();
+        final @NotNull  List<Standing> eventStandings = standingDao.getEventStandings(event);
+        final @NotNull  Map<String, List<Swimmer>> swimmersByCountry = new HashMap<>();
 
         for (Standing standing : eventStandings) {
             Swimmer swimmer = swimmerDao.getSwimmer(standing.getSwimmerName());
@@ -46,10 +44,9 @@ public class ClassificationService implements IClassificationService {
     }
 
     @Override
-    @SuppressWarnings("DesignForExtension")
     public @NotNull Map<String, List<Swimmer>> getClassificationByEvent(@NotNull String country) {
-        final List<Standing> countryStandings = standingDao.getCountryStandings(country);
-        final Map<String, List<Swimmer>> swimmersByCountry = new HashMap<>();
+        final @NotNull  List<Standing> countryStandings = standingDao.getCountryStandings(country);
+        final @NotNull  Map<String, List<Swimmer>> swimmersByCountry = new HashMap<>();
 
         for (Standing standing : countryStandings) {
             Swimmer swimmer = swimmerDao.getSwimmer(standing.getSwimmerName());

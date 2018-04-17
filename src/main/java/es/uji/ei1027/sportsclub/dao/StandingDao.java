@@ -3,7 +3,6 @@ package es.uji.ei1027.sportsclub.dao;
 import es.uji.ei1027.sportsclub.model.Standing;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -20,7 +19,7 @@ public class StandingDao implements IStandingDao {
     private JdbcTemplate template;
 
     @Autowired
-    public void setDataSource(@Qualifier("dataSource") @NotNull DataSource dataSource) {
+    public final void setDataSource(@NotNull DataSource dataSource) {
         template = new JdbcTemplate(dataSource);
     }
 
@@ -42,7 +41,7 @@ public class StandingDao implements IStandingDao {
     private static final class StandingMapper implements RowMapper<Standing> {
 
         public @NotNull Standing mapRow(@NotNull ResultSet rs, int rowNum) throws SQLException {
-            Standing standing = new Standing();
+           final  @NotNull Standing standing = new Standing();
             standing.setSwimmerName(rs.getString("swimmer_name"));
             standing.setEventName(rs.getString("event_name"));
             standing.setPosition(rs.getInt("position"));
@@ -52,7 +51,7 @@ public class StandingDao implements IStandingDao {
     }
 
     @Override
-    public @NotNull String toString() {
+    public final @NotNull String toString() {
         return String.format("StandingDao{template=%s}", template);
     }
 }
